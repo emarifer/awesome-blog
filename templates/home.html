@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ home_title|rmdashes }}
+{% endblock title %}
+
+{% block header %}
+  <h1 class="text-center text-2xl md:text-3xl">🥾&nbsp;El Blog de los Caminantes&nbsp;🥾</h1>
+  {% block logo %}
+     <img
+      class="w-4/5 md:w-72 mx-auto hover:scale-110 ease-in-out duration-500"
+      src="https://kneninomiqnxwtkplruk.supabase.co/storage/v1/object/public/posts/logo.png?t=2023-05-08T11%3A42%3A15.358Z"
+      alt="Logo"
+    /> 
+  {% endblock logo %}
+  <h3 class="text-center text-lg -mb-3">Últimos posts:</h3>
+{% endblock header %}
+
+{% block content %}
+  <section class="overflow-hidden rounded-xl relative">
+    <div class="circle-1 w-40 h-40 left-0 -z-10"></div>
+    
+    <ul class="h-[35vh] rounded-xl overflow-y-scroll overflow-x-hidden p-6 bg-gray-500
+      bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-25 border-l border-t border-gray-100/50">
+
+      {% for item in home_links %}
+        <li title="{{ item.1|rmdashes }} / {{ item.2 }}"
+          class="hover:text-sky-500 hover:-translate-y-1.5 ease-in duration-300 my-1.5 md:mx-16 whitespace-nowrap text-ellipsis overflow-hidden">
+          <a href="/post/{{ item.0 }}">{{ item.1|rmdashes }}</a>
+          <span class="text-slate-500">&nbsp;|&nbsp;</span>
+          <span class="text-lime-400">por {{ item.2 }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <div class="circle-2 w-3/5 h-3/5 bottom-0 right-0 -z-10"></div>
+  </section>
+{% endblock content %}

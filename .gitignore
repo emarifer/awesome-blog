@@ -1,0 +1,5 @@
+/target
+/tailwind/node_modules/
+/tailwind/..src/
+.env
+**.swp

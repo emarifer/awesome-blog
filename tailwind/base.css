@@ -1,0 +1,95 @@
+@tailwind base;
+
+/* global styles */
+
+/* Firefox */
+* {
+  scrollbar-width: 8px;
+  scrollbar-color: #475569 #0f172a1a;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #6b728040;
+  border-radius: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 12px;
+}
+
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+ul li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: red; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1rem; /* Also needed for space (tweak if needed) */
+  /* margin-left: 0;  Also needed for space (tweak if needed) */
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Kanit";
+  font-weight: normal;
+  src: url(../fonts/Kanit-Regular.ttf) format("truetype");
+}
+
+@layer base {
+  body {
+    @apply bg-primary p-12 text-cyan-50 font-kanit;
+  }
+
+  h1 {
+    @apply text-3xl font-black text-lime-500;
+  }
+
+  h2 {
+    @apply text-2xl font-bold pb-4 text-red-700;
+  }
+
+  h3 {
+    @apply text-xl font-semibold text-red-400;
+  }
+
+  h4 {
+    @apply text-lg font-normal py-2;
+  }
+
+  p {
+    @apply text-sm;
+  }
+}
+
+@layer components {
+  .circle-1 {
+    background: linear-gradient(
+      270deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 9, 121, 1) 60%,
+      rgba(0, 212, 255, 1) 100%
+    );
+    clip-path: circle(70% at 20% 22%);
+    position: absolute;
+  }
+
+  .circle-2 {
+    background: linear-gradient(
+      270deg,
+      rgba(250, 80, 71, 1) 33%,
+      rgba(255, 25, 207, 1) 100%
+    );
+    clip-path: circle(70% at 80% 100%);
+    position: absolute;
+  }
+}
