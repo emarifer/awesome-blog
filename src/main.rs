@@ -28,8 +28,10 @@ struct HomeTemplate<'a> {
 
 // post template
 // localhost:4000/post/:query_title
+// Es necesario establecer escape = "none" en la plantilla
+// para que no escape el Html que encuentre en el Markdown.
 #[derive(Template)]
-#[template(path = "posts.html")]
+#[template(path = "posts.html", escape = "none")]
 pub struct PostTemplate<'a> {
     post_title: &'a str,
     post_date: &'a DateTime<Local>,
@@ -77,6 +79,8 @@ mod filters {
         Ok(date)
     }
 
+    // Filtro markdown personalizado. Si se usa el filtro markdown de Askama
+    // hay que activar la feature de Askama en Cargo.toml
     pub fn frmarkdown(body: &str) -> askama::Result<String> {
         // used as part of pulldown_cmark for setting flags to enable extra
         // features - we're not going to use any of those, hence the `empty();`
@@ -200,3 +204,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+/*
+ * https://www.youtube.com/watch?v=XZtlD_m59sM
+ * https://mortenvistisen.com/posts/how-to-build-a-simple-blog-using-rust
+ * https://spacedimp.com/blog/using-rust-axum-postgresql-and-tokio-to-build-a-blog/
+ * https://fasterthanli.me/articles/a-new-website-for-2020
+ * https://djc.github.io/askama/
+ * https://codebeautify.org/minify-html
+ * https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/
+ * https://codevoweb.com/?s=axum
+ * https://codevoweb.com/ (para Axum o Actix)
+ *
+ * https://docs.rs/tower-http/latest/tower_http/cors/index.html
+ */

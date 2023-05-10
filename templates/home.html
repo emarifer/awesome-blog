@@ -5,19 +5,11 @@
 {% endblock title %}
 
 {% block header %}
-  <h1 class="text-center text-2xl md:text-3xl">🥾&nbsp;El Blog de los Caminantes&nbsp;🥾</h1>
-  {% block logo %}
-     <img
-      class="w-4/5 md:w-72 mx-auto hover:scale-110 ease-in-out duration-500"
-      src="https://kneninomiqnxwtkplruk.supabase.co/storage/v1/object/public/posts/logo.png?t=2023-05-08T11%3A42%3A15.358Z"
-      alt="Logo"
-    /> 
-  {% endblock logo %}
-  <h3 class="text-center text-lg -mb-3">Últimos posts:</h3>
+  <h3 class="text-center text-lg mt-4">Últimos posts:</h3>
 {% endblock header %}
 
 {% block content %}
-  <section class="overflow-hidden rounded-xl relative">
+  <section class="overflow-hidden rounded-xl relative mt-2">
     <div class="circle-1 w-40 h-40 left-0 -z-10"></div>
     
     <ul class="h-[35vh] rounded-xl overflow-y-scroll overflow-x-hidden p-6 bg-gray-500

@@ -67,7 +67,7 @@ ul li::before {
   }
 
   p {
-    @apply text-sm;
+    @apply text-sm my-1.5;
   }
 }
 

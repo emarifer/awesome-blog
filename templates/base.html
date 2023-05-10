@@ -13,16 +13,22 @@
     <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
   </head>
 
-  <body
-    class="flex flex-col gap-4 md:gap-8 min-h-screen leading-normal tracking-normal"
-  >
+  <body>
+   {% block nav %}
+     <nav class="w-full h-16 px-2 md:px-12 flex justify-between items-center bg-slate-800 fixed top-0 left-0 right-0 z-50">
+       <a class="block bg-violet-500 rounded-full p-2 text-2xl border-2 border-lime-400 hover:scale-110 ease-in-out duration-500" href="/">🥾</a>
+       <h1 class="text-xl md:text-3xl mr-4 md:mr-12">El Blog de los Caminantes</h1>
+     </nav>
+   {% endblock nav %}
 
-
-   {% block header %}
-     <header class="flex flex-col gap-1 md:gap-3">
-       {% block logo %}{% endblock logo %}
-     </header>
-   {% endblock header %}
+   <header class="flex flex-col gap-1 md:gap-3 mt-[70px] md:mt-20">
+     <img
+      class="w-4/5 md:w-72 mx-auto hover:scale-110 ease-in-out duration-500"
+      src="https://kneninomiqnxwtkplruk.supabase.co/storage/v1/object/public/posts/logo.png?t=2023-05-08T11%3A42%3A15.358Z"
+      alt="Logo"
+     />
+     {% block header %}{% endblock header %}
+   </header>
 
     <main
       class="w-full md:w-[75vw] mx-auto overflow-x-hidden"

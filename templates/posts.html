@@ -3,14 +3,7 @@
 {% block title %}{{ post_title|rmdashes }} | por {{ post_author }}{% endblock title %}
 
 {% block header %}
-  {% block logo %}
-     <img
-      class="w-4/5 md:w-72 mx-auto hover:scale-110 ease-in-out duration-500"
-      src="https://kneninomiqnxwtkplruk.supabase.co/storage/v1/object/public/posts/logo.png?t=2023-05-08T11%3A42%3A15.358Z"
-      alt="Logo"
-    /> 
-  {% endblock logo %}
-  <h1>
+  <h1 class="mt-4">
     {{ post_title|rmdashes }}
   </h1>
 
@@ -26,17 +19,15 @@
     <p class="text-lime-400 text-sm">tiempo de lectura: {{ post_reading_time }} min</p>
   </div>
 
-
-  <p class="text-slate-500 md:-mt-6">
+  <p class="text-slate-500">
     {{ post_date|frdate }}
   </p>
 {% endblock header %}
 
 {% block content %}
   <article class="mt-8 p-3 border-[1px] rounded-lg">
-    {{ post_body|frmarkdown|escape("none") }}
+    {{ post_body|frmarkdown }}
   </article>
 
   <a class="underline mt-16 block hover:text-sky-500 ease-in duration-300" href="/">&larr; Volver a la lista de posts</a>
 {% endblock content %}
-
