@@ -36,6 +36,61 @@ ul li::before {
   /* margin-left: 0;  Also needed for space (tweak if needed) */
 }
 
+article hr {
+  width: 95%;
+  height: 2px;
+  border-width: 0;
+  color: #a3e635;
+  background-color: #a3e635;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figure * img {
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figure div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figcaption p {
+  white-space: nowrap;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #a3e635;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  figure div {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  figure * img {
+    width: 320px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  figcaption p {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -93,3 +148,35 @@ ul li::before {
     position: absolute;
   }
 }
+
+/* Tailwindcss Glassmorphism Generator */
+/* https://tailwindcss-glassmorphism.vercel.app/ */
+
+/* CSS selector for an img element with class */
+/* https://stackoverflow.com/questions/33848970/css-selector-for-an-img-element-with-class */
+/* https://www.w3.org/TR/selectors-3/#descendant-combinators */
+/* https://www.w3schools.com/tags/tag_figure.asp */
+
+/* Plantilla de Caja de imagen con pie de foto */
+/* Al usar esta Plantilla hay que minificar el Html resultante */
+/* https://codebeautify.org/minify-html */
+
+/*
+
+<hr />
+<figure>
+  <div>
+    <figcaption>
+      <p>
+        Casas Colgantes de Frías, Burgos.
+      </p>
+    </figcaption>
+    <img
+      src="https://kneninomiqnxwtkplruk.supabase.co/storage/v1/object/public/posts/frias.jpg?t=2023-05-10T14%3A38%3A08.381Z"
+      alt="Frías"
+    />
+  </div>
+</figure>
+<hr />
+ 
+ */
