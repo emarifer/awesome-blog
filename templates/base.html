@@ -31,14 +31,14 @@
    </header>
 
     <main
-      class="w-full md:w-[75vw] mx-auto overflow-x-hidden"
+      class="w-full md:w-[650px] mx-auto overflow-x-hidden"
     >
       {% block content %}{% endblock content %}
     </main>
 
     {% block footer %}
       <footer
-        class="flex w-full mt-2 gap-2 justify-center items-center italic tracking-wider hover:text-sky-500 ease-in duration-300"
+        class="flex w-full mt-2 md:mt-16 gap-2 justify-center items-center italic tracking-wider hover:text-sky-500 ease-in duration-300"
       >
         &copy; {{year}} by
         <a href="https://github.com/emarifer?tab=repositories" target="_blank"
@@ -52,7 +52,40 @@
         </svg>
       </footer>
     {% endblock footer %}
+
+    {% block buttonUp %}
+      <button id="buttonUp" title="Ir arriba" onclick="scrollToTop()"
+        style="display: none;"
+        class="bg-sky-600 shadow-md shadow-sky-800 hover:bg-sky-400 rounded-full fixed bottom-4 right-4 p-2 z-50">
+        <svg fill="currentColor" class="w-6" viewBox="0 0 16 16">
+          <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+        </svg>
+      </button>
+    {% endblock buttonUp %}
+
+    <script>
+      const scrollToTop = () => {
+	scrollTo({
+	  behavior: 'smooth',
+          top: 0,
+	});
+      };
+
+      const buttonUp = document.getElementById("buttonUp"); 
+      
+      const scrollFunction = () => {
+        if (window.scrollY || window.document.documentElement.scrollTop > 300) {
+          buttonUp.style.display = "block";
+        } else {
+          buttonUp.style.display = "none";
+        }
+      };
+      
+      window.onscroll = () => scrollFunction();
+    </script>
   </body>
 </html>
 
 <!-- https://www.youtube.com/watch?v=hv0rNxr1XXk -->
+
+<!-- https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->

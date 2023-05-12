@@ -8,14 +8,21 @@
   </h1>
 
   <div class="hidden md:block">
-    <p class="text-red-400 text-sm">por {{ post_author }}
-      <span class="text-slate-500">&nbsp;|&nbsp;</span>
-      <span class="text-lime-400">tiempo de lectura: {{ post_reading_time }} min</span>
-    </p> 
+    <div class="flex gap-4">
+      <p class="text-red-400 text-sm">por {{ post_author }}
+        <span class="text-slate-500">&nbsp;|&nbsp;</span>
+        <span class="text-lime-400">tiempo de lectura: {{ post_reading_time }} min</span>
+      </p>
+      <img class="w-12 rounded-full" src="{{ post_avatar }}" alt="{{ post_author }}"> 
+    </div>
   </div>
 
   <div class="md:hidden">
-    <p class="text-red-400 text-sm">por {{ post_author }}</p>
+    <div class="flex gap-4">
+      <p class="text-red-400 text-sm">por {{ post_author }}</p> 
+      <img class="h-12 rounded-full" src="{{ post_avatar }}" alt="{{ post_author }}">
+    </div>
+
     <p class="text-lime-400 text-sm">tiempo de lectura: {{ post_reading_time }} min</p>
   </div>
 

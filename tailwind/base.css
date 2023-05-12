@@ -47,7 +47,7 @@ article hr {
 }
 
 figure * img {
-  width: 280px;
+  width: 220px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -56,7 +56,6 @@ figure div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
   padding: 8px;
   margin-left: auto;
   margin-right: auto;
@@ -67,6 +66,8 @@ figcaption p {
   font-size: 0.875rem;
   text-align: center;
   color: #a3e635;
+  margin-top: 4px;
+  margin-bottom: 4px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -74,6 +75,7 @@ figcaption p {
 @media (min-width: 640px) {
   figure div {
     flex-direction: row;
+    gap: 12px;
     align-items: flex-start;
     margin-left: 0;
     margin-right: 0;
@@ -86,8 +88,7 @@ figcaption p {
   }
 
   figcaption p {
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0;
   }
 }
 
@@ -106,7 +107,7 @@ figcaption p {
   }
 
   h1 {
-    @apply text-3xl font-black text-lime-500;
+    @apply text-[28px] tracking-tight md:tracking-normal md:text-3xl font-black text-lime-500;
   }
 
   h2 {
@@ -122,7 +123,7 @@ figcaption p {
   }
 
   p {
-    @apply text-sm my-1.5;
+    @apply text-sm my-4;
   }
 }
 

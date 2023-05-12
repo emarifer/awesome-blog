@@ -38,6 +38,7 @@ pub struct PostTemplate<'a> {
     post_body: &'a str,
     post_author: &'a str,
     post_reading_time: i8,
+    post_avatar: &'a str,
     year: i32,
 }
 
@@ -52,6 +53,7 @@ pub struct Post {
     pub created_at: DateTime<Local>,
     pub author: String,
     pub reading_time: i8,
+    pub avatar: String,
 }
 
 // Our custom Askama filters
@@ -138,6 +140,7 @@ async fn post(
         post_body: "none",
         post_author: "none",
         post_reading_time: 0i8,
+        post_avatar: "none",
         year: Utc::now().year(),
     };
 
@@ -149,6 +152,7 @@ async fn post(
                 post_body: &item.body,
                 post_author: &item.author,
                 post_reading_time: item.reading_time,
+                post_avatar: &item.avatar,
                 year: Utc::now().year(),
             };
             break;
