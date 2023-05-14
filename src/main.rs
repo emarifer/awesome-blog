@@ -8,7 +8,7 @@ use axum::{
 };
 
 use askama::Template;
-use chrono::{DateTime, Datelike, Local, Utc};
+use chrono::{DateTime, Datelike, Utc};
 use dotenv;
 use postgrest::Postgrest;
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ struct HomeTemplate<'a> {
 #[template(path = "posts.html", escape = "none")]
 pub struct PostTemplate<'a> {
     post_title: &'a str,
-    post_date: &'a DateTime<Local>,
+    post_date: &'a DateTime<Utc>,
     post_body: &'a str,
     post_author: &'a str,
     post_reading_time: i8,
@@ -50,7 +50,7 @@ pub struct Post {
     pub id: String,
     pub post_title: String,
     pub body: String,
-    pub created_at: DateTime<Local>,
+    pub created_at: DateTime<Utc>,
     pub author: String,
     pub reading_time: i8,
     pub avatar: String,
@@ -59,7 +59,7 @@ pub struct Post {
 // Our custom Askama filters
 mod filters {
 
-    use chrono::{DateTime, Local, Timelike};
+    use chrono::{DateTime, Local, Timelike, Utc};
     use pulldown_cmark::{Options, Parser};
 
     // Filter to replace spaces with dashes in the title
@@ -68,10 +68,10 @@ mod filters {
         Ok(title.replace("-", " ").into())
     }
 
-    pub fn frdate(created_at: &DateTime<Local>) -> askama::Result<String> {
+    pub fn frdate(created_at: &DateTime<Utc>) -> askama::Result<String> {
         let date = created_at.date_naive().format("%d-%m-%Y");
         let local_offset = (Local::now().offset().local_minus_utc() / 3600) as u32;
-        // println!("{local_offset}");
+        println!("{local_offset}");
 
         let date = format!(
             "{:02}:{:02} • {}",
@@ -138,7 +138,7 @@ async fn post(
 ) -> impl IntoResponse {
     let mut template = PostTemplate {
         post_title: "none",
-        post_date: &DateTime::from(Local::now()),
+        post_date: &DateTime::from(Utc::now()),
         post_body: "none",
         post_author: "none",
         post_reading_time: 0i8,
