@@ -70,10 +70,12 @@ mod filters {
 
     pub fn frdate(created_at: &DateTime<Local>) -> askama::Result<String> {
         let date = created_at.date_naive().format("%d-%m-%Y");
+        let local_offset = (Local::now().offset().local_minus_utc() / 3600) as u32;
+        // println!("{local_offset}");
 
         let date = format!(
             "{:02}:{:02} • {}",
-            created_at.hour() + ((created_at.offset().local_minus_utc() / 3600) as u32),
+            created_at.hour() + local_offset,
             created_at.minute(),
             date
         );
