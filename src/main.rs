@@ -8,7 +8,7 @@ use axum::{
 };
 
 use askama::Template;
-use chrono::{DateTime, Datelike, Utc};
+use chrono::{DateTime, Datelike, Local, Utc};
 use dotenv;
 use postgrest::Postgrest;
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ struct HomeTemplate<'a> {
 #[template(path = "posts.html", escape = "none")]
 pub struct PostTemplate<'a> {
     post_title: &'a str,
-    post_date: &'a DateTime<Utc>,
+    post_date: &'a DateTime<Local>,
     post_body: &'a str,
     post_author: &'a str,
     post_reading_time: i8,
@@ -44,13 +44,16 @@ pub struct PostTemplate<'a> {
 
 // SQL query will return all posts
 // into a Vec<Post>
+// Para que siga siendo la misma hora de creación de los posts (tanto en horario de invierno como
+// de verano) en Supabase, se debe suponer que el DateTime es Local (DateTime<Local>)
+// VER el ejemplo en "/home/enrique/Development/Rust/chrono-tz-test/"
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Post {
     // #[serde(rename(deserialize = "postId"))]
     pub id: String,
     pub post_title: String,
     pub body: String,
-    pub created_at: DateTime<Utc>,
+    pub created_at: DateTime<Local>,
     pub author: String,
     pub reading_time: i8,
     pub avatar: String,
@@ -59,7 +62,7 @@ pub struct Post {
 // Our custom Askama filters
 mod filters {
 
-    use chrono::{DateTime, Utc};
+    use chrono::{DateTime, Local};
     use chrono_tz::Europe::Madrid;
     use pulldown_cmark::{Options, Parser};
 
@@ -69,7 +72,7 @@ mod filters {
         Ok(title.replace("-", " ").into())
     }
 
-    pub fn frdate(created_at: &DateTime<Utc>) -> askama::Result<String> {
+    pub fn frdate(created_at: &DateTime<Local>) -> askama::Result<String> {
         let madrid_time = created_at.with_timezone(&Madrid);
 
         Ok(madrid_time.format("%H:%M • %d-%m-%Y").to_string())
@@ -130,7 +133,7 @@ async fn post(
 ) -> impl IntoResponse {
     let mut template = PostTemplate {
         post_title: "none",
-        post_date: &Utc::now(),
+        post_date: &Local::now(),
         post_body: "none",
         post_author: "none",
         post_reading_time: 0i8,
@@ -215,4 +218,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
  * https://codevoweb.com/ (para Axum o Actix)
  *
  * https://docs.rs/tower-http/latest/tower_http/cors/index.html
+ * https://www.youtube.com/watch?v=zGCjxCqxVY4
+ *
+ * DEFINITIVE SOLUTION TO THE PROBLEM OF UTC TIME:
+ * https://stackoverflow.com/questions/41158999/getting-the-current-time-in-specified-timezone
+ * https://blog.logrocket.com/timezone-handling-in-rust-with-chrono-tz/
+ * https://www.iana.org/time-zones
+ * https://docs.rs/chrono-tz/0.8.2/chrono_tz/Europe/constant.Madrid.html
+ * https://docs.rs/chrono/latest/chrono/struct.DateTime.html#method.with_timezone
  */
