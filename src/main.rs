@@ -130,7 +130,7 @@ async fn post(
 ) -> impl IntoResponse {
     let mut template = PostTemplate {
         post_title: "none",
-        post_date: &DateTime::from(Utc::now()),
+        post_date: &Utc::now(),
         post_body: "none",
         post_author: "none",
         post_reading_time: 0i8,
