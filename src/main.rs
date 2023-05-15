@@ -59,7 +59,8 @@ pub struct Post {
 // Our custom Askama filters
 mod filters {
 
-    use chrono::{DateTime, Local, Timelike, Utc};
+    use chrono::{DateTime, Utc};
+    use chrono_tz::Europe::Madrid;
     use pulldown_cmark::{Options, Parser};
 
     // Filter to replace spaces with dashes in the title
@@ -69,18 +70,9 @@ mod filters {
     }
 
     pub fn frdate(created_at: &DateTime<Utc>) -> askama::Result<String> {
-        let date = created_at.date_naive().format("%d-%m-%Y");
-        let local_offset = (Local::now().offset().local_minus_utc() / 3600) as u32;
-        println!("{local_offset}");
+        let madrid_time = created_at.with_timezone(&Madrid);
 
-        let date = format!(
-            "{:02}:{:02} • {}",
-            created_at.hour() + local_offset,
-            created_at.minute(),
-            date
-        );
-
-        Ok(date)
+        Ok(madrid_time.format("%H:%M • %d-%m-%Y").to_string())
     }
 
     // Filtro markdown personalizado. Si se usa el filtro markdown de Askama
