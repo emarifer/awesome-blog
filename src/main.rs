@@ -75,7 +75,19 @@ mod filters {
     pub fn frdate(created_at: &DateTime<Local>) -> askama::Result<String> {
         let madrid_time = created_at.with_timezone(&Madrid);
 
-        Ok(madrid_time.format("%H:%M • %d-%m-%Y").to_string())
+        // Adding the offset so that the time zone of the creation of the post is known
+        let datetime = [
+            madrid_time.format("%H:%M • %d-%m-%Y").to_string(),
+            format!(
+                "[UTC{}]",
+                DateTime::parse_from_rfc3339(&madrid_time.to_rfc3339())
+                    .unwrap()
+                    .offset()
+            ),
+        ]
+        .join("&nbsp;&nbsp;&nbsp;");
+
+        Ok(datetime)
     }
 
     // Filtro markdown personalizado. Si se usa el filtro markdown de Askama
