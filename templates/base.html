@@ -74,7 +74,7 @@
       const buttonUp = document.getElementById("buttonUp"); 
       
       const scrollFunction = () => {
-        if (window.scrollY || window.document.documentElement.scrollTop > 300) {
+        if ((window.scrollY || window.document.documentElement.scrollTop) > 300) {
           buttonUp.style.display = "block";
         } else {
           buttonUp.style.display = "none";
