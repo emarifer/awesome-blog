@@ -107,18 +107,18 @@ mod filters {
     }
 }
 
-// home router (homepage) will return all blog titles in anchor links
+// home router (homepage) will return all blog titles and authors in anchor links
 async fn home(State(state): State<Arc<Vec<Post>>>) -> impl IntoResponse {
-    let s = state.clone();
-    let mut plinks: Vec<(String, String, String)> = Vec::new();
-
-    for i in 0..s.len() {
-        plinks.push((
-            format!("{}-{}", &s[i].post_title, &s[i].id),
-            s[i].post_title.clone(),
-            s[i].author.clone(),
-        ));
-    }
+    let plinks: Vec<(String, String, String)> = state
+        .iter()
+        .map(|item| {
+            (
+                format!("{}-{}", &item.post_title, &item.id),
+                format!("{}", &item.post_title),
+                format!("{}", &item.author),
+            )
+        })
+        .collect();
 
     let template = HomeTemplate {
         home_title: String::from("El Blog de los Caminantes"),
@@ -135,7 +135,6 @@ async fn home(State(state): State<Arc<Vec<Post>>>) -> impl IntoResponse {
             .into_response(),
     }
 }
-
 // post router uses two extractors
 // Path to extract the query: localhost:4000/post/thispart
 // State that holds a Vec<Post> used to render the post that the query matches
@@ -143,37 +142,23 @@ async fn post(
     Path(query_title): Path<String>,
     State(state): State<Arc<Vec<Post>>>,
 ) -> impl IntoResponse {
-    let mut template = PostTemplate {
-        post_title: "none",
-        post_date: &Local::now(),
-        post_body: "none",
-        post_author: "none",
-        post_reading_time: 0i8,
-        post_avatar: "none",
-        year: Utc::now().year(),
+    let template = match state
+        .iter()
+        .filter(|item| query_title == format!("{}-{}", &item.post_title, &item.id))
+        .next()
+    {
+        Some(item) => PostTemplate {
+            post_title: &item.post_title,
+            post_date: &item.created_at,
+            post_body: &item.body,
+            post_author: &item.author,
+            post_reading_time: item.reading_time,
+            post_avatar: &item.avatar,
+            year: Utc::now().year(),
+        },
+        None => return (StatusCode::NOT_FOUND, "404 not found").into_response(),
+        // 404 if no title found matching the user's query
     };
-
-    for item in state.iter() {
-        if query_title == format!("{}-{}", &item.post_title, &item.id) {
-            template = PostTemplate {
-                post_title: &item.post_title,
-                post_date: &item.created_at,
-                post_body: &item.body,
-                post_author: &item.author,
-                post_reading_time: item.reading_time,
-                post_avatar: &item.avatar,
-                year: Utc::now().year(),
-            };
-            break;
-        } else {
-            continue;
-        }
-    }
-
-    // 404 if no title found matching the user's query
-    if &template.post_title == &"none" {
-        return (StatusCode::NOT_FOUND, "404 not found").into_response();
-    }
 
     match template.render() {
         Ok(html) => Html(html).into_response(),
